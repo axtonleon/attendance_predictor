@@ -12,7 +12,7 @@ with open('linear_regression_model.pkl', 'rb') as f:
     loaded_lr_model = pickle.load(f)
 
 # Google reCAPTCHA secret key
-RECAPTCHA_SECRET_KEY = '6LdI6h8qAAAAAGsDskoZ3-Kc3jps3HHw6Z-ck2zp'
+RECAPTCHA_SECRET_KEY = '6LePrCEqAAAAAFFlJZ96a1KvKApzYDNUT0kKHHup'
 
 def verify_recaptcha(response):
     payload = {'secret': RECAPTCHA_SECRET_KEY, 'response': response}
