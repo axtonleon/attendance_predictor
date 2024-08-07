@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attendance Rate Prediction</title>
+    <style>
+      /* Your existing CSS */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        background-color: #f0f8ff;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #4b9cd3;
+        color: white;
+      }
+
+      header img {
+        height: 70px;
+      }
+
+      header .logo-container {
+        display: flex;
+        align-items: center;
+      }
+
+      header .logo-text {
+        margin-left: 10px;
+        font-size: 18px;
+      }
+
+      header .title {
+        text-align: center;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #e6f2ff;
+        flex-grow: 1;
+        padding: 20px;
+        text-align: center;
+      }
+
+      #result {
+        width: 300px;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #007bff;
+        color: #fff;
+        border: 2px solid #0056b3;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 30px;
+        margin-top: 20px;
+      }
+
+      footer {
+        padding: 20px;
+        background-color: #031b57;
+        color: white;
+      }
+
+      footer form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+
+      footer form label {
+        margin-right: 5px;
+      }
+
+      footer form .form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      footer form select {
+        padding: 10px;
+        border: 2px solid #007bff;
+        border-radius: 5px;
+        background-color: #fff;
+        color: #007bff;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      footer form select:focus {
+        outline: none;
+        border-color: #0056b3;
+      }
+
+      footer .g-recaptcha {
+        margin: 20px 0;
+      }
+
+      footer .submit-button {
+        margin-left: 10px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      footer .submit-button:hover {
+        background-color: #0056b3;
+      }
+
+      @media (max-width: 768px) {
+        header,
+        footer {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        footer form {
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+    </style>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="logo-container">
+        <img
+          src="{{ url_for('static', filename='2070e4fb-d654-4154-9817-c804e46a67bf.png') }}"
+          alt="Left Logo"
+        />
+        <span class="logo-text">School of Electrical Systems Engineering</span>
+      </div>
+      <div class="title">
+        <h1>Attendance Rate Prediction</h1>
+        <p>
+          Predict the attendance rate based on the day, time, and department.
+        </p>
+      </div>
+      <div class="logo-container">
+        <span class="logo-text">Computer Engineering Department</span>
+        <img
+          src="{{ url_for('static', filename='5553737d-2e65-4187-950a-9250e8d653e6.png') }}"
+          alt="Right Logo"
+        />
+      </div>
+    </header>
+    <main>
+      <div id="result">Prediction will appear here</div>
+    </main>
+    <footer>
+      <form id="predictionForm" action="/predict" method="post">
+        <div class="form-group">
+          <label for="dayOfWeek">Day of the Week:</label>
+          <select id="dayOfWeek" name="dayOfWeek" required>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="time">Time:</label>
+          <select id="time" name="time" required>
+            <option value="8:00 AM">8:00 AM</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="12:00 PM">12:00 PM</option>
+            <option value="2:00 PM">2:00 PM</option>
+            <option value="4:00 PM">4:00 PM</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="department">Department:</label>
+          <select id="department" name="department" required>
+            <option value="ICT 400lvl">ICT 400lvl</option>
+            <option value="EEE 500lvl">EEE 500lvl</option>
+            <option value="CPE 500lvl">CPE 500lvl</option>
+            <option value="EEE 400lvl">EEE 400lvl</option>
+            <option value="CPE 400lvl">CPE 400lvl</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div
+            class="g-recaptcha"
+            data-sitekey="6LdI6h8qAAAAAP1ufyKmX_21mnqTeJ2KiT_ol0-a"
+          ></div>
+        </div>
+        <input class="submit-button" type="submit" value="Submit" />
+      </form>
+    </footer>
+    <script>
+      document
+        .getElementById("predictionForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          var dayOfWeek = document.getElementById("dayOfWeek").value;
+          var time = document.getElementById("time").value;
+          var department = document.getElementById("department").value;
+          var recaptchaResponse = grecaptcha.getResponse();
+
+          if (recaptchaResponse.length === 0) {
+            alert("Please verify you are human!");
+            return;
+          }
+
+          fetch("/predict", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              dayOfWeek: dayOfWeek,
+              time: time,
+              department: department,
+              recaptchaResponse: recaptchaResponse,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              var prediction = parseFloat(data.predictions).toFixed(2);
+              document.getElementById("result").innerText =
+                "Predicted Attendance Rate: " + prediction + "%";
+              grecaptcha.reset();
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("An error occurred. Please try again.");
+              grecaptcha.reset();
+            });
+        });
+    </script>
+  </body>
+</html>
