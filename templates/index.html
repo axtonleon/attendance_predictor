@@ -39,8 +39,22 @@
         font-size: 18px;
       }
 
-      header .title {
+      .title {
         text-align: center;
+        background-color: #4b9cd3;
+        color: white;
+        padding: 10px 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .title h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .title p {
+        margin: 5px 0 0;
+        font-size: 16px;
       }
 
       main {
@@ -54,7 +68,7 @@
       }
 
       #result {
-        width: 300px;
+        width: 700px;
         height: 300px;
         display: flex;
         justify-content: center;
@@ -135,6 +149,10 @@
           flex-direction: column;
           gap: 15px;
         }
+
+        #result {
+          width: 300px;
+        }
       }
     </style>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -148,12 +166,7 @@
         />
         <span class="logo-text">School of Electrical Systems Engineering</span>
       </div>
-      <div class="title">
-        <h1>Attendance Rate Prediction</h1>
-        <p>
-          Predict the attendance rate based on the day, time, and department.
-        </p>
-      </div>
+      
       <div class="logo-container">
         <span class="logo-text">Computer Engineering Department</span>
         <img
@@ -162,6 +175,12 @@
         />
       </div>
     </header>
+    <div class="title">
+        <h1>Attendance Rate Prediction</h1>
+        <p>
+          Predict the attendance rate based on the day, time, and department.
+        </p>
+      </div>
     <main>
       <div id="result">Prediction will appear here</div>
     </main>
